@@ -1,7 +1,7 @@
-from flask import Flask, jsonify, request
-
+from flask import Flask, jsonify, request, make_response
+from flask_cors import CORS
 app = Flask(__name__)
-
+CORS(app)  # cho phép tất cả origin
 # user database giả lập
 accounts = [
     {"username": "admin", "password": "123"},
@@ -50,42 +50,53 @@ def check_auth():
 
 
 # -------------------
-# GET ALL USERS
+# GET ALL USERS (Cacheable)
 # -------------------
 @app.route("/users", methods=["GET"])
 def get_users():
 
     if not check_auth():
         return {"error": "Unauthorized"}, 401
+    print("API called")
+    response = make_response(jsonify(users))
 
-    return jsonify(users)
+    # Cache trong 60 giây
+    response.headers["Cache-Control"] = "private, max-age=60"
+
+    return response
 
 
 # -------------------
-# GET USER BY ID
+# GET USER BY ID (Cacheable)
 # -------------------
 @app.route("/users/<int:user_id>", methods=["GET"])
 def get_user(user_id):
 
     if not check_auth():
         return {"error": "Unauthorized"}, 401
-
+    print("API called")
     for u in users:
         if u["id"] == user_id:
-            return jsonify(u)
+
+            response = make_response(jsonify(u))
+
+            # Cache 60 giây
+            response.headers["Cache-Control"] = "private, max-age=60"
+
+            return response
 
     return {"error": "User not found"}, 404
 
 
 # -------------------
-# ADD USER
+# ADD USER (không cache)
 # -------------------
 @app.route("/users", methods=["POST"])
 def add_user():
 
     if not check_auth():
         return {"error": "Unauthorized"}, 401
-
+    print("API called")
     data = request.json
     users.append(data)
 
