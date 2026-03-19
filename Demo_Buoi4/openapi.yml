@@ -1,0 +1,317 @@
+openapi: 3.0.0
+info:
+  title: Book Management API
+  version: 1.0.0
+  description: API for managing books, users, and reviews
+
+servers:
+  - url: http://localhost:5000
+
+paths:
+  /api/v1/books:
+    get:
+      summary: Get list of books
+      responses:
+        "200":
+          description: List of books
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BooksResponse"
+
+    post:
+      summary: Create new book
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BookInput"
+      responses:
+        "201":
+          description: Book created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
+
+  /api/v1/books/{book_id}:
+    get:
+      summary: Get book by ID
+      parameters:
+        - name: book_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Book detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BookResponse"
+        "404":
+          description: Book not found
+
+    delete:
+      summary: Delete book
+      parameters:
+        - name: book_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Book not found
+
+  /api/v1/users:
+    get:
+      summary: Get list of users
+      responses:
+        "200":
+          description: List users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UsersResponse"
+
+    post:
+      summary: Create new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+  /api/v1/users/{user_id}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: User detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "404":
+          description: Not found
+
+    delete:
+      summary: Delete user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+
+  /api/v1/book-reviews:
+    get:
+      summary: Get list of reviews
+      responses:
+        "200":
+          description: List reviews
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewsResponse"
+
+    post:
+      summary: Create review
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReviewInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewResponse"
+
+  /api/v1/book-reviews/{review_id}:
+    get:
+      summary: Get review by ID
+      parameters:
+        - name: review_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Review detail
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewResponse"
+        "404":
+          description: Not found
+
+    delete:
+      summary: Delete review
+      parameters:
+        - name: review_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+
+components:
+  schemas:
+    Meta:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          example: "2026-01-01T12:00:00"
+
+    Book:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        author:
+          type: string
+
+    BookInput:
+      type: object
+      required: [title, author]
+      properties:
+        title:
+          type: string
+        author:
+          type: string
+
+    BookResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Book"
+        meta:
+          $ref: "#/components/schemas/Meta"
+
+    BooksResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Book"
+        meta:
+          $ref: "#/components/schemas/Meta"
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+
+    UserInput:
+      type: object
+      required: [username, email]
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+
+    UserResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/User"
+        meta:
+          $ref: "#/components/schemas/Meta"
+
+    UsersResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+        meta:
+          $ref: "#/components/schemas/Meta"
+
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+        rating:
+          type: integer
+        comment:
+          type: string
+        book_id:
+          type: integer
+        user_id:
+          type: integer
+
+    ReviewInput:
+      type: object
+      required: [rating, comment, book_id, user_id]
+      properties:
+        rating:
+          type: integer
+        comment:
+          type: string
+        book_id:
+          type: integer
+        user_id:
+          type: integer
+
+    ReviewResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Review"
+        meta:
+          $ref: "#/components/schemas/Meta"
+
+    ReviewsResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/Review"
+        meta:
+          $ref: "#/components/schemas/Meta"

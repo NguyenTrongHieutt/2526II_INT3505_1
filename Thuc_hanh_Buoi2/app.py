@@ -1,5 +1,9 @@
 from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS
+
+import jwt
+import datetime
+
 app = Flask(__name__)
 CORS(app)  # cho phép tất cả origin
 # user database giả lập
@@ -8,14 +12,23 @@ accounts = [
     {"username": "user", "password": "123"}
 ]
 
-# token giả lập
-TOKEN = "mysecrettoken"
+#secret key
+SECRET_KEY = "supersecretkey"
 
 users = [
     {"id": 1, "name": "Alice"},
     {"id": 2, "name": "Bob"}
 ]
+# token giả lập (thường sẽ được tạo động sau khi login thành công)
+def generate_token(username):
+    payload = {
+        "username": username,
+        "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1)  # token hết hạn sau 1 giờ
+    }
 
+    token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
+
+    return token
 
 # -------------------
 # LOGIN
@@ -29,9 +42,12 @@ def login():
 
     for acc in accounts:
         if acc["username"] == username and acc["password"] == password:
+
+            token = generate_token(username)
+
             return jsonify({
                 "message": "Login successful",
-                "token": TOKEN
+                "token": token
             })
 
     return {"error": "Invalid credentials"}, 401
@@ -43,10 +59,19 @@ def login():
 def check_auth():
     auth = request.headers.get("Authorization")
 
-    if auth == f"Bearer {TOKEN}":
+    if not auth:
+        return False
+
+    try:
+        token = auth.split(" ")[1]
+        decoded = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
         return True
 
-    return False
+    except jwt.ExpiredSignatureError:
+        return False 
+
+    except jwt.InvalidTokenError:
+        return False 
 
 
 # -------------------
