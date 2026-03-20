@@ -1,0 +1,83 @@
+FORMAT: 1A
+HOST: https://two526ii-int3505-1-rm49.onrender.com
+
+# Book Management API
+
+## Books [/api/v1/books]
+
+### Get All Books [GET]
+
++ Response 200 (application/json)
+
+        {
+          "data": [
+            { "id": 1, "title": "Book A", "author": "Author A" }
+          ],
+          "meta": { "timestamp": "2026-01-01T12:00:00" }
+        }
+
+### Create Book [POST]
+
++ Request (application/json)
+
+        {
+          "title": "New Book",
+          "author": "Author X"
+        }
+
++ Response 201 (application/json)
+
+---
+
+## Book Detail [/api/v1/books/{book_id}]
+
++ Parameters
+    + book_id: 1 (number)
+
+### Get Book [GET]
+
++ Response 200 (application/json)
+
+### Delete Book [DELETE]
+
++ Response 204
+
+---
+
+## Users [/api/v1/users]
+
+### Get Users [GET]
+
++ Response 200
+
+### Create User [POST]
+
++ Request (application/json)
+
+        {
+          "username": "john",
+          "email": "john@example.com"
+        }
+
++ Response 201
+
+---
+
+## Reviews [/api/v1/book-reviews]
+
+### Get Reviews [GET]
+
++ Response 200
+
+### Create Review [POST]
+
++ Request (application/json)
+
+        {
+          "rating": 5,
+          "comment": "Great",
+          "book_id": 1,
+          "user_id": 1
+        }
+
++ Response 201

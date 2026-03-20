@@ -1,0 +1,65 @@
+#%RAML 1.0
+title: Book Management API
+version: v1
+baseUri: http://localhost:5000
+
+types:
+  Book:
+    type: object
+    properties:
+      id: integer
+      title: string
+      author: string
+
+  User:
+    type: object
+    properties:
+      id: integer
+      username: string
+      email: string
+
+  Review:
+    type: object
+    properties:
+      id: integer
+      rating: integer
+      comment: string
+      book_id: integer
+      user_id: integer
+
+/books:
+  get:
+    description: Get all books
+    responses:
+      200:
+        body:
+          application/json:
+            type: Book[]
+
+  post:
+    body:
+      application/json:
+        type: Book
+    responses:
+      201:
+        description: Created
+
+/books/{book_id}:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            type: Book
+
+  delete:
+    responses:
+      204:
+
+/users:
+  get:
+  post:
+
+/book-reviews:
+  get:
+  post:
