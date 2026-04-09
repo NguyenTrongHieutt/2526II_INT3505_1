@@ -1,65 +1,208 @@
 #%RAML 1.0
 title: Book Management API
-version: v1
-baseUri: http://localhost:5000
+version: 1.0.0
+description: API for managing books, users, and reviews
+baseUri: http://127.0.0.1:5000
+
+mediaType: application/json
 
 types:
+  Meta:
+    type: object
+    properties:
+      timestamp:
+        type: string
+        example: "2026-01-01T12:00:00"
+
   Book:
     type: object
     properties:
-      id: integer
+      id?: integer
+      title?: string
+      author?: string
+
+  BookInput:
+    type: object
+    properties:
       title: string
       author: string
+
+  BookResponse:
+    type: object
+    properties:
+      data?: Book
+      meta?: Meta
+
+  BooksResponse:
+    type: object
+    properties:
+      data?: Book[]
+      meta?: Meta
 
   User:
     type: object
     properties:
-      id: integer
+      id?: integer
+      username?: string
+      email?: string
+
+  UserInput:
+    type: object
+    properties:
       username: string
       email: string
+
+  UserResponse:
+    type: object
+    properties:
+      data?: User
+      meta?: Meta
+
+  UsersResponse:
+    type: object
+    properties:
+      data?: User[]
+      meta?: Meta
 
   Review:
     type: object
     properties:
-      id: integer
+      id?: integer
+      rating?: integer
+      comment?: string
+      book_id?: integer
+      user_id?: integer
+
+  ReviewInput:
+    type: object
+    properties:
       rating: integer
       comment: string
       book_id: integer
       user_id: integer
 
-/books:
+  ReviewResponse:
+    type: object
+    properties:
+      data?: Review
+      meta?: Meta
+
+  ReviewsResponse:
+    type: object
+    properties:
+      data?: Review[]
+      meta?: Meta
+
+/api/v1/books:
   get:
-    description: Get all books
+    description: Get list of books
     responses:
       200:
+        description: List of books
         body:
-          application/json:
-            type: Book[]
-
+          type: BooksResponse
   post:
+    description: Create new book
     body:
-      application/json:
-        type: Book
+      type: BookInput
+    responses:
+      201:
+        description: Book created
+        body:
+          type: BookResponse
+  /{book_id}:
+    uriParameters:
+      book_id:
+        type: integer
+    get:
+      description: Get book by ID
+      responses:
+        200:
+          description: Book detail
+          body:
+            type: BookResponse
+        404:
+          description: Book not found
+    delete:
+      description: Delete book
+      responses:
+        204:
+          description: Deleted
+        404:
+          description: Book not found
+
+/api/v1/users:
+  get:
+    description: Get list of users
+    responses:
+      200:
+        description: List users
+        body:
+          type: UsersResponse
+  post:
+    description: Create new user
+    body:
+      type: UserInput
     responses:
       201:
         description: Created
+        body:
+          type: UserResponse
+  /{user_id}:
+    uriParameters:
+      user_id:
+        type: integer
+    get:
+      description: Get user by ID
+      responses:
+        200:
+          description: User detail
+          body:
+            type: UserResponse
+        404:
+          description: Not found
+    delete:
+      description: Delete user
+      responses:
+        204:
+          description: Deleted
+        404:
+          description: Not found
 
-/books/{book_id}:
+/api/v1/book-reviews:
   get:
+    description: Get list of reviews
     responses:
       200:
+        description: List reviews
         body:
-          application/json:
-            type: Book
-
-  delete:
+          type: ReviewsResponse
+  post:
+    description: Create review
+    body:
+      type: ReviewInput
     responses:
-      204:
-
-/users:
-  get:
-  post:
-
-/book-reviews:
-  get:
-  post:
+      201:
+        description: Created
+        body:
+          type: ReviewResponse
+  /{review_id}:
+    uriParameters:
+      review_id:
+        type: integer
+    get:
+      description: Get review by ID
+      responses:
+        200:
+          description: Review detail
+          body:
+            type: ReviewResponse
+        404:
+          description: Not found
+    delete:
+      description: Delete review
+      responses:
+        204:
+          description: Deleted
+        404:
+          description: Not found

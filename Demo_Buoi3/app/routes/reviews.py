@@ -41,7 +41,9 @@ def get_review(review_id):
     data = {
         "id": review.id,
         "rating": review.rating,
-        "comment": review.comment
+        "comment": review.comment,
+        "book_id": review.book_id,
+        "user_id": review.user_id
     }
 
     return success_response(data)
@@ -56,7 +58,9 @@ def create_new_review():
     response_data = {
         "id": review.id,
         "rating": review.rating,
-        "comment": review.comment
+        "comment": review.comment,
+        "book_id": review.book_id,
+        "user_id": review.user_id
     }
 
     return success_response(response_data, 201)

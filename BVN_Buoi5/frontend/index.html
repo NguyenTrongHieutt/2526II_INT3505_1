@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pagination Demo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <h1>Pagination Demo (1M records)</h1>
+
+    <button onclick="loadOffset()">Offset Pagination</button>
+    <button onclick="loadPage()">Page Pagination</button>
+    <button onclick="loadCursor()">Cursor Pagination</button>
+
+    <div id="time"></div>
+
+    <table id="table"></table>
+
+    <script src="app.js"></script>
+  </body>
+</html>

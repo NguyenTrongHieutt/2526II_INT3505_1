@@ -1,22 +1,33 @@
 FORMAT: 1A
-HOST: https://two526ii-int3505-1-rm49.onrender.com
+HOST: http://127.0.0.1:5000
+
 
 # Book Management API
 
-## Books [/api/v1/books]
+API for managing **books, users, and reviews**.
 
-### Get All Books [GET]
+# Group Books
+
+## Books Collection [/api/v1/books]
+
+### Get list of books [GET]
 
 + Response 200 (application/json)
 
         {
           "data": [
-            { "id": 1, "title": "Book A", "author": "Author A" }
+            {
+              "id": 1,
+              "title": "Book A",
+              "author": "Author A"
+            }
           ],
-          "meta": { "timestamp": "2026-01-01T12:00:00" }
+          "meta": {
+            "timestamp": "2026-01-01T12:00:00"
+          }
         }
 
-### Create Book [POST]
+### Create new book [POST]
 
 + Request (application/json)
 
@@ -27,30 +38,67 @@ HOST: https://two526ii-int3505-1-rm49.onrender.com
 
 + Response 201 (application/json)
 
----
+        {
+          "data": {
+            "id": 2,
+            "title": "New Book",
+            "author": "Author X"
+          },
+          "meta": {
+            "timestamp": "2026-01-01T12:00:00"
+          }
+        }
 
 ## Book Detail [/api/v1/books/{book_id}]
 
 + Parameters
-    + book_id: 1 (number)
+    + book_id: 1 (number, required) - ID of the book
 
-### Get Book [GET]
+### Get book by ID [GET]
 
 + Response 200 (application/json)
 
-### Delete Book [DELETE]
+        {
+          "data": {
+            "id": 1,
+            "title": "Book A",
+            "author": "Author A"
+          },
+          "meta": {
+            "timestamp": "2026-01-01T12:00:00"
+          }
+        }
+
++ Response 404
+
+### Delete book [DELETE]
 
 + Response 204
 
----
++ Response 404
 
-## Users [/api/v1/users]
+# Group Users
 
-### Get Users [GET]
+## Users Collection [/api/v1/users]
 
-+ Response 200
+### Get list of users [GET]
 
-### Create User [POST]
++ Response 200 (application/json)
+
+        {
+          "data": [
+            {
+              "id": 1,
+              "username": "john",
+              "email": "john@example.com"
+            }
+          ],
+          "meta": {
+            "timestamp": "2026-01-01T12:00:00"
+          }
+        }
+
+### Create new user [POST]
 
 + Request (application/json)
 
@@ -59,17 +107,71 @@ HOST: https://two526ii-int3505-1-rm49.onrender.com
           "email": "john@example.com"
         }
 
-+ Response 201
++ Response 201 (application/json)
 
----
+        {
+          "data": {
+            "id": 1,
+            "username": "john",
+            "email": "john@example.com"
+          },
+          "meta": {
+            "timestamp": "2026-01-01T12:00:00"
+          }
+        }
 
-## Reviews [/api/v1/book-reviews]
+## User Detail [/api/v1/users/{user_id}]
 
-### Get Reviews [GET]
++ Parameters
+    + user_id: 1 (number, required) - ID of the user
 
-+ Response 200
+### Get user by ID [GET]
 
-### Create Review [POST]
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "id": 1,
+            "username": "john",
+            "email": "john@example.com"
+          },
+          "meta": {
+            "timestamp": "2026-01-01T12:00:00"
+          }
+        }
+
++ Response 404
+
+### Delete user [DELETE]
+
++ Response 204
+
++ Response 404
+
+# Group Reviews
+
+## Reviews Collection [/api/v1/book-reviews]
+
+### Get list of reviews [GET]
+
++ Response 200 (application/json)
+
+        {
+          "data": [
+            {
+              "id": 1,
+              "rating": 5,
+              "comment": "Great",
+              "book_id": 1,
+              "user_id": 1
+            }
+          ],
+          "meta": {
+            "timestamp": "2026-01-01T12:00:00"
+          }
+        }
+
+### Create review [POST]
 
 + Request (application/json)
 
@@ -80,4 +182,47 @@ HOST: https://two526ii-int3505-1-rm49.onrender.com
           "user_id": 1
         }
 
-+ Response 201
++ Response 201 (application/json)
+
+        {
+          "data": {
+            "id": 1,
+            "rating": 5,
+            "comment": "Great",
+            "book_id": 1,
+            "user_id": 1
+          },
+          "meta": {
+            "timestamp": "2026-01-01T12:00:00"
+          }
+        }
+
+## Review Detail [/api/v1/book-reviews/{review_id}]
+
++ Parameters
+    + review_id: 1 (number, required) - ID of the review
+
+### Get review by ID [GET]
+
++ Response 200 (application/json)
+
+        {
+          "data": {
+            "id": 1,
+            "rating": 5,
+            "comment": "Great",
+            "book_id": 1,
+            "user_id": 1
+          },
+          "meta": {
+            "timestamp": "2026-01-01T12:00:00"
+          }
+        }
+
++ Response 404
+
+### Delete review [DELETE]
+
++ Response 204
+
++ Response 404

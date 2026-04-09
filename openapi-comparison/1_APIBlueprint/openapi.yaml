@@ -1,0 +1,604 @@
+swagger: '2.0'
+info:
+  title: Book Management API
+  version: ''
+  description: API for managing **books, users, and reviews**.
+host: 127.0.0.1:5000
+basePath: /
+schemes:
+  - http
+paths:
+  /api/v1/books:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+              data:
+                - id: 1
+                  title: Book A
+                  author: Author A
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    title:
+                      type: string
+                    author:
+                      type: string
+              meta:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+            example:
+              data:
+                - id: 1
+                  title: Book A
+                  author: Author A
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+      summary: Get list of books
+      operationId: Get list of books
+      description: ''
+      tags:
+        - Books
+      parameters: []
+      produces:
+        - application/json
+      consumes: []
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              data:
+                id: 2
+                title: New Book
+                author: Author X
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  title:
+                    type: string
+                  author:
+                    type: string
+              meta:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+            example:
+              data:
+                id: 2
+                title: New Book
+                author: Author X
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+      summary: Create new book
+      operationId: Create new book
+      description: ''
+      tags:
+        - Books
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              title:
+                type: string
+              author:
+                type: string
+            example:
+              title: New Book
+              author: Author X
+      produces:
+        - application/json
+      consumes:
+        - application/json
+  /api/v1/books/{book_id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+              data:
+                id: 1
+                title: Book A
+                author: Author A
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  title:
+                    type: string
+                  author:
+                    type: string
+              meta:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+            example:
+              data:
+                id: 1
+                title: Book A
+                author: Author A
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+        '404':
+          description: Not Found
+          headers: {}
+          examples: {}
+      summary: Get book by ID
+      operationId: Get book by ID
+      description: ''
+      tags:
+        - Books
+      parameters:
+        - &ref_0
+          name: book_id
+          in: path
+          description: ID of the book
+          required: true
+          x-example: '1'
+          type: number
+      produces:
+        - application/json
+      consumes: []
+    delete:
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+          examples: {}
+        '404':
+          description: Not Found
+          headers: {}
+          examples: {}
+      summary: Delete book
+      operationId: Delete book
+      description: ''
+      tags:
+        - Books
+      parameters:
+        - *ref_0
+      consumes: []
+  /api/v1/users:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+              data:
+                - id: 1
+                  username: john
+                  email: john@example.com
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    username:
+                      type: string
+                    email:
+                      type: string
+              meta:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+            example:
+              data:
+                - id: 1
+                  username: john
+                  email: john@example.com
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+      summary: Get list of users
+      operationId: Get list of users
+      description: ''
+      tags:
+        - Users
+      parameters: []
+      produces:
+        - application/json
+      consumes: []
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              data:
+                id: 1
+                username: john
+                email: john@example.com
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  username:
+                    type: string
+                  email:
+                    type: string
+              meta:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+            example:
+              data:
+                id: 1
+                username: john
+                email: john@example.com
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+      summary: Create new user
+      operationId: Create new user
+      description: ''
+      tags:
+        - Users
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+              email:
+                type: string
+            example:
+              username: john
+              email: john@example.com
+      produces:
+        - application/json
+      consumes:
+        - application/json
+  /api/v1/users/{user_id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+              data:
+                id: 1
+                username: john
+                email: john@example.com
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  username:
+                    type: string
+                  email:
+                    type: string
+              meta:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+            example:
+              data:
+                id: 1
+                username: john
+                email: john@example.com
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+        '404':
+          description: Not Found
+          headers: {}
+          examples: {}
+      summary: Get user by ID
+      operationId: Get user by ID
+      description: ''
+      tags:
+        - Users
+      parameters:
+        - &ref_1
+          name: user_id
+          in: path
+          description: ID of the user
+          required: true
+          x-example: '1'
+          type: number
+      produces:
+        - application/json
+      consumes: []
+    delete:
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+          examples: {}
+        '404':
+          description: Not Found
+          headers: {}
+          examples: {}
+      summary: Delete user
+      operationId: Delete user
+      description: ''
+      tags:
+        - Users
+      parameters:
+        - *ref_1
+      consumes: []
+  /api/v1/book-reviews:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+              data:
+                - id: 1
+                  rating: 5
+                  comment: Great
+                  book_id: 1
+                  user_id: 1
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                    rating:
+                      type: number
+                    comment:
+                      type: string
+                    book_id:
+                      type: number
+                    user_id:
+                      type: number
+              meta:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+            example:
+              data:
+                - id: 1
+                  rating: 5
+                  comment: Great
+                  book_id: 1
+                  user_id: 1
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+      summary: Get list of reviews
+      operationId: Get list of reviews
+      description: ''
+      tags:
+        - Reviews
+      parameters: []
+      produces:
+        - application/json
+      consumes: []
+    post:
+      responses:
+        '201':
+          description: Created
+          headers: {}
+          examples:
+            application/json:
+              data:
+                id: 1
+                rating: 5
+                comment: Great
+                book_id: 1
+                user_id: 1
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  rating:
+                    type: number
+                  comment:
+                    type: string
+                  book_id:
+                    type: number
+                  user_id:
+                    type: number
+              meta:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+            example:
+              data:
+                id: 1
+                rating: 5
+                comment: Great
+                book_id: 1
+                user_id: 1
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+      summary: Create review
+      operationId: Create review
+      description: ''
+      tags:
+        - Reviews
+      parameters:
+        - name: body
+          in: body
+          schema:
+            type: object
+            properties:
+              rating:
+                type: number
+              comment:
+                type: string
+              book_id:
+                type: number
+              user_id:
+                type: number
+            example:
+              rating: 5
+              comment: Great
+              book_id: 1
+              user_id: 1
+      produces:
+        - application/json
+      consumes:
+        - application/json
+  /api/v1/book-reviews/{review_id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          examples:
+            application/json:
+              data:
+                id: 1
+                rating: 5
+                comment: Great
+                book_id: 1
+                user_id: 1
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  rating:
+                    type: number
+                  comment:
+                    type: string
+                  book_id:
+                    type: number
+                  user_id:
+                    type: number
+              meta:
+                type: object
+                properties:
+                  timestamp:
+                    type: string
+            example:
+              data:
+                id: 1
+                rating: 5
+                comment: Great
+                book_id: 1
+                user_id: 1
+              meta:
+                timestamp: '2026-01-01T12:00:00'
+        '404':
+          description: Not Found
+          headers: {}
+          examples: {}
+      summary: Get review by ID
+      operationId: Get review by ID
+      description: ''
+      tags:
+        - Reviews
+      parameters:
+        - &ref_2
+          name: review_id
+          in: path
+          description: ID of the review
+          required: true
+          x-example: '1'
+          type: number
+      produces:
+        - application/json
+      consumes: []
+    delete:
+      responses:
+        '204':
+          description: No Content
+          headers: {}
+          examples: {}
+        '404':
+          description: Not Found
+          headers: {}
+          examples: {}
+      summary: Delete review
+      operationId: Delete review
+      description: ''
+      tags:
+        - Reviews
+      parameters:
+        - *ref_2
+      consumes: []
+definitions:
+  Books Collection: {}
+  Book Detail: {}
+  Users Collection: {}
+  User Detail: {}
+  Reviews Collection: {}
+  Review Detail: {}
+securityDefinitions: {}
+tags:
+  - name: Books
+  - name: Users
+  - name: Reviews

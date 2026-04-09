@@ -5,7 +5,7 @@ info:
   description: API for managing books, users, and reviews
 
 servers:
-  - url: http://localhost:5000
+  - url: http://127.0.0.1:5000⁠
 
 paths:
   /api/v1/books:

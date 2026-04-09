@@ -5,7 +5,7 @@ info:
   description: API for managing books, users, and reviews
 
 servers:
-  - url: https://two526ii-int3505-1-rm49.onrender.com
+  - url: http://127.0.0.1:5000
 
 paths:
   /api/v1/books:
