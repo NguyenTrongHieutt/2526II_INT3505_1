@@ -1,0 +1,779 @@
+{
+  "info": {
+    "_postman_id": "4f87cb83-35f3-48c6-a559-714ca61249e1",
+    "name": "Book Management API",
+    "description": "API for managing books, users, and reviews",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51983409",
+    "_collection_link": "https://go.postman.co/collection/51983409-4f87cb83-35f3-48c6-a559-714ca61249e1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "v1",
+          "item": [
+            {
+              "name": "books",
+              "item": [
+                {
+                  "name": "Create",
+                  "item": [
+                    {
+                      "name": "Create new book (valid)",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "pm.test(\"Status 201\", () => {\r",
+                              "    pm.response.to.have.status(201);\r",
+                              "});\r",
+                              "\r",
+                              "const json = pm.response.json();\r",
+                              "\r",
+                              "pm.test(\"Có data\", () => {\r",
+                              "    pm.expect(json).to.have.property(\"data\");\r",
+                              "});\r",
+                              "\r",
+                              "pm.test(\"Có id\", () => {\r",
+                              "    pm.expect(json.data).to.have.property(\"id\");\r",
+                              "});\r",
+                              "\r",
+                              "// lưu id để dùng sau\r",
+                              "pm.environment.set(\"book_id\", json.data.id);"
+                            ],
+                            "type": "text/javascript",
+                            "packages": {},
+                            "requests": {}
+                          }
+                        }
+                      ],
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"title\": \"Clean Code\",\n  \"author\": \"Robert C. Martin\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/books",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "books"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "Book created",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"title\": \"string\",\n  \"author\": \"string\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/books",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "books"
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"author\": \"string\"\n  },\n  \"meta\": {\n    \"timestamp\": \"2026-01-01T12:00:00\"\n  }\n}"
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Create new book (invalid)",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "pm.test(\"Status 400\", () => {\r",
+                              "    pm.response.to.have.status(400);\r",
+                              "});"
+                            ],
+                            "type": "text/javascript",
+                            "packages": {},
+                            "requests": {}
+                          }
+                        }
+                      ],
+                      "request": {
+                        "method": "POST",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"title\": \"Missing author\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/books",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "books"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "Book created",
+                          "originalRequest": {
+                            "method": "POST",
+                            "header": [
+                              {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                              },
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "body": {
+                              "mode": "raw",
+                              "raw": "{\n  \"title\": \"string\",\n  \"author\": \"string\"\n}",
+                              "options": {
+                                "raw": {
+                                  "headerFamily": "json",
+                                  "language": "json"
+                                }
+                              }
+                            },
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/books",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "books"
+                              ]
+                            }
+                          },
+                          "status": "Created",
+                          "code": 201,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"author\": \"string\"\n  },\n  \"meta\": {\n    \"timestamp\": \"2026-01-01T12:00:00\"\n  }\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "{book_id}",
+                  "item": [
+                    {
+                      "name": "Get book by ID",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "// 1. Status code\r",
+                              "pm.test(\"Status 200\", () => {\r",
+                              "    pm.response.to.have.status(200);\r",
+                              "});\r",
+                              "\r",
+                              "// 2. Response time\r",
+                              "pm.test(\"Response time < 500ms\", () => {\r",
+                              "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                              "});\r",
+                              "\r",
+                              "// 3. Content-Type\r",
+                              "pm.test(\"Content-Type là JSON\", () => {\r",
+                              "    pm.expect(pm.response.headers.get(\"Content-Type\"))\r",
+                              "        .to.include(\"application/json\");\r",
+                              "});\r",
+                              "\r",
+                              "// 4. Parse JSON\r",
+                              "const json = pm.response.json();\r",
+                              "\r",
+                              "// 5. Check structure\r",
+                              "pm.test(\"Có data và meta\", () => {\r",
+                              "    pm.expect(json).to.have.property(\"data\");\r",
+                              "    pm.expect(json).to.have.property(\"meta\");\r",
+                              "});\r",
+                              "\r",
+                              "// 6. Check đúng ID\r",
+                              "pm.test(\"Đúng book_id\", () => {\r",
+                              "    pm.expect(json.data.id).to.eql(pm.environment.get(\"book_id\"));\r",
+                              "});\r",
+                              "\r",
+                              "// 7. Validate field tồn tại\r",
+                              "pm.test(\"Có đủ field\", () => {\r",
+                              "    pm.expect(json.data).to.have.property(\"title\");\r",
+                              "    pm.expect(json.data).to.have.property(\"author\");\r",
+                              "});\r",
+                              "\r",
+                              "// 8. Validate kiểu dữ liệu\r",
+                              "pm.test(\"Field đúng kiểu\", () => {\r",
+                              "    pm.expect(json.data.id).to.be.a(\"string\");\r",
+                              "    pm.expect(json.data.title).to.be.a(\"string\");\r",
+                              "    pm.expect(json.data.author).to.be.a(\"string\");\r",
+                              "});\r",
+                              "\r",
+                              "// 9. Validate dữ liệu hợp lệ\r",
+                              "pm.test(\"title & author không rỗng\", () => {\r",
+                              "    pm.expect(json.data.title.length).to.be.above(0);\r",
+                              "    pm.expect(json.data.author.length).to.be.above(0);\r",
+                              "});\r",
+                              "\r",
+                              "// 10. Meta hợp lệ\r",
+                              "pm.test(\"meta có timestamp\", () => {\r",
+                              "    pm.expect(json.meta).to.have.property(\"timestamp\");\r",
+                              "});"
+                            ],
+                            "type": "text/javascript",
+                            "packages": {},
+                            "requests": {}
+                          }
+                        }
+                      ],
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/books/{{book_id}}",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "books",
+                            "{{book_id}}"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "Book detail",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/books/:book_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "books",
+                                ":book_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "book_id",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"author\": \"string\"\n  },\n  \"meta\": {\n    \"timestamp\": \"2026-01-01T12:00:00\"\n  }\n}"
+                        },
+                        {
+                          "name": "Book not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/books/:book_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "books",
+                                ":book_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "book_id",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "body": null
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Delete book",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "// 1. Status code\r",
+                              "pm.test(\"Status 204\", () => {\r",
+                              "    pm.response.to.have.status(204);\r",
+                              "});\r",
+                              "\r",
+                              "// 2. Response body phải rỗng\r",
+                              "pm.test(\"Response body phải rỗng\", () => {\r",
+                              "    pm.expect(pm.response.text()).to.eql(\"\");\r",
+                              "});\r",
+                              "\r",
+                              "// 3. Content-Length (nếu server trả về)\r",
+                              "pm.test(\"Content-Length = 0 (nếu có)\", () => {\r",
+                              "    const length = pm.response.headers.get(\"Content-Length\");\r",
+                              "    if (length) {\r",
+                              "        pm.expect(parseInt(length)).to.eql(0);\r",
+                              "    }\r",
+                              "});"
+                            ],
+                            "type": "text/javascript",
+                            "packages": {},
+                            "requests": {}
+                          }
+                        }
+                      ],
+                      "request": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/books/{{book_id}}",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "books",
+                            "{{book_id}}"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "Deleted",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/books/:book_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "books",
+                                ":book_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "book_id",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "No Content",
+                          "code": 204,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "body": null
+                        },
+                        {
+                          "name": "Book not found",
+                          "originalRequest": {
+                            "method": "DELETE",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/books/:book_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "books",
+                                ":book_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "book_id",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "body": null
+                        }
+                      ]
+                    },
+                    {
+                      "name": "Get book by ID (Not found)",
+                      "event": [
+                        {
+                          "listen": "test",
+                          "script": {
+                            "exec": [
+                              "pm.test(\"Status 404\", () => {\r",
+                              "    pm.response.to.have.status(404);\r",
+                              "});"
+                            ],
+                            "type": "text/javascript",
+                            "packages": {},
+                            "requests": {}
+                          }
+                        }
+                      ],
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/books/{{book_id}}",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "books",
+                            "{{book_id}}"
+                          ]
+                        }
+                      },
+                      "response": [
+                        {
+                          "name": "Book detail",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/books/:book_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "books",
+                                ":book_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "book_id",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"data\": {\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"author\": \"string\"\n  },\n  \"meta\": {\n    \"timestamp\": \"2026-01-01T12:00:00\"\n  }\n}"
+                        },
+                        {
+                          "name": "Book not found",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/v1/books/:book_id",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "v1",
+                                "books",
+                                ":book_id"
+                              ],
+                              "variable": [
+                                {
+                                  "key": "book_id",
+                                  "value": "string"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [],
+                          "cookie": [],
+                          "body": null
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "Get list of books",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "// 1. Status code\r",
+                          "pm.test(\"Status 200\", () => {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "});\r",
+                          "\r",
+                          "// 2. Response time\r",
+                          "pm.test(\"Response time < 500ms\", () => {\r",
+                          "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+                          "});\r",
+                          "\r",
+                          "// 3. Content-Type\r",
+                          "pm.test(\"Content-Type là JSON\", () => {\r",
+                          "    pm.expect(pm.response.headers.get(\"Content-Type\"))\r",
+                          "        .to.include(\"application/json\");\r",
+                          "});\r",
+                          "\r",
+                          "// 4. Parse JSON\r",
+                          "const json = pm.response.json();\r",
+                          "\r",
+                          "// 5. Check structure\r",
+                          "pm.test(\"Có field data và meta\", () => {\r",
+                          "    pm.expect(json).to.have.property(\"data\");\r",
+                          "    pm.expect(json).to.have.property(\"meta\");\r",
+                          "});\r",
+                          "\r",
+                          "// 6. data là array\r",
+                          "pm.test(\"data là array\", () => {\r",
+                          "    pm.expect(json.data).to.be.an(\"array\");\r",
+                          "});\r",
+                          "\r",
+                          "// 7. meta hợp lệ\r",
+                          "pm.test(\"meta có timestamp\", () => {\r",
+                          "    pm.expect(json.meta).to.have.property(\"timestamp\");\r",
+                          "});\r",
+                          "\r",
+                          "// 8. Validate từng phần tử trong data\r",
+                          "pm.test(\"Mỗi book có đủ field\", () => {\r",
+                          "    json.data.forEach((book) => {\r",
+                          "        pm.expect(book).to.have.property(\"id\");\r",
+                          "        pm.expect(book).to.have.property(\"title\");\r",
+                          "        pm.expect(book).to.have.property(\"author\");\r",
+                          "    });\r",
+                          "});\r",
+                          "\r",
+                          "// 9. Kiểm tra kiểu dữ liệu\r",
+                          "pm.test(\"Field đúng kiểu dữ liệu\", () => {\r",
+                          "    json.data.forEach((book) => {\r",
+                          "        pm.expect(book.id).to.be.a(\"string\");\r",
+                          "        pm.expect(book.title).to.be.a(\"string\");\r",
+                          "        pm.expect(book.author).to.be.a(\"string\");\r",
+                          "    });\r",
+                          "});\r",
+                          "\r",
+                          "// 10. Validate dữ liệu không rỗng\r",
+                          "pm.test(\"title và author không rỗng\", () => {\r",
+                          "    json.data.forEach((book) => {\r",
+                          "        pm.expect(book.title.length).to.be.above(0);\r",
+                          "        pm.expect(book.author.length).to.be.above(0);\r",
+                          "    });\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/v1/books",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "v1",
+                        "books"
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "List of books",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/v1/books",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "v1",
+                            "books"
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"author\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"title\": \"string\",\n      \"author\": \"string\"\n    }\n  ],\n  \"meta\": {\n    \"timestamp\": \"2026-01-01T12:00:00\"\n  }\n}"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:5000"
+    }
+  ]
+}

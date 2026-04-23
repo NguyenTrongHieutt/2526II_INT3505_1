@@ -1,0 +1,22 @@
+{
+  "id": "019436e3-e918-479b-a25a-9d698cdcf360",
+  "name": "Env_BookManagementApi",
+  "values": [
+    {
+      "key": "book_id",
+      "value": "",
+      "type": "any",
+      "enabled": true
+    },
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:5000",
+      "type": "default",
+      "enabled": true
+    }
+  ],
+  "color": null,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2026-04-23T11:24:45.955Z",
+  "_postman_exported_using": "Postman/12.7.5"
+}
