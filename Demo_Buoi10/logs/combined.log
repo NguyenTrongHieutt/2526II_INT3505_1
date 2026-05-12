@@ -1,0 +1,3 @@
+{"durationMs":5,"level":"info","message":"HTTP request","method":"GET","path":"/health","service":"demo-buoi10-api","statusCode":200,"timestamp":"2026-05-12T10:59:53.595Z"}
+{"durationMs":2,"level":"info","message":"HTTP request","method":"GET","path":"/api/v1/books","service":"demo-buoi10-api","statusCode":200,"timestamp":"2026-05-12T10:59:59.048Z"}
+{"durationMs":4,"level":"info","message":"HTTP request","method":"GET","path":"/metrics","service":"demo-buoi10-api","statusCode":200,"timestamp":"2026-05-12T11:00:00.334Z"}
